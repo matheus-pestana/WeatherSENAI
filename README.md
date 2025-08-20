@@ -10,7 +10,7 @@ React.js: Biblioteca JavaScript para a construção da interface do usuário.
 
 Fetch API: Para realizar as requisições HTTP e buscar os dados de clima da API.
 
-Open-Meteo API: A fonte de dados de clima gratuita e que não exige chaves de autenticação.
+Open-Meteo API: Uma fonte de dados gratuita sobre o clima.
 
 CSS Modules: Para estilização isolada e modular de cada componente.
 
@@ -22,7 +22,7 @@ Pré-requisitos
 
 Passos
 - Clone o repositório:
-git clone https://github.com/seu-usuario/seu-repositorio.git
+git clone https://github.com/matheus-pestana/WeatherSENAI.git
 
 - Navegue até a pasta do projeto:
 cd seu-repositorio
