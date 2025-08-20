@@ -18,33 +18,25 @@ CSS Modules: Para estilização isolada e modular de cada componente.
 Siga os passos abaixo para ter uma cópia do projeto rodando em sua máquina.
 
 Pré-requisitos
-Node.js e npm (ou yarn) instalados.
+- Node.js e npm (ou yarn) instalados.
 
 Passos
-Clone o repositório:
-
-Bash
-
+- Clone o repositório:
 git clone https://github.com/seu-usuario/seu-repositorio.git
-Navegue até a pasta do projeto:
 
-Bash
-
+- Navegue até a pasta do projeto:
 cd seu-repositorio
-Instale as dependências:
 
-Bash
-
+- Instale as dependências:
 npm install
-# ou
+ou
 yarn install
-Inicie o servidor de desenvolvimento:
 
-Bash
-
+- Inicie o servidor de desenvolvimento:
 npm start
-# ou
+ou
 yarn start
+
 O projeto será iniciado e aberto automaticamente no seu navegador padrão em http://localhost:3000.
 
 ## 💻 Como o Projeto Funciona
