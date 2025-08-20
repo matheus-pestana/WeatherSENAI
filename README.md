@@ -6,13 +6,10 @@ Este é um aplicativo de previsão do tempo dinâmico e responsivo, construído 
 Ao consumir dados da Open-Meteo API, o aplicativo oferece informações essenciais do clima em tempo real, como temperatura atual, umidade, sensação térmica e uma previsão para os próximos dias. Todo o design é focado na experiência do usuário, permitindo que qualquer pessoa obtenha as informações que precisa de forma rápida e eficiente.
 
 ## 🚀 Tecnologias Utilizadas
-React.js: Biblioteca JavaScript para a construção da interface do usuário.
-
-Fetch API: Para realizar as requisições HTTP e buscar os dados de clima da API.
-
-Open-Meteo API: Uma fonte de dados gratuita sobre o clima.
-
-CSS Modules: Para estilização isolada e modular de cada componente.
+- React.js: Biblioteca JavaScript para a construção da interface do usuário.
+- Fetch API: Para realizar as requisições HTTP e buscar os dados de clima da API.
+- Open-Meteo API: Uma fonte de dados gratuita sobre o clima.
+- CSS Modules: Para estilização isolada e modular de cada componente.
 
 ## ⚙️ Como Instalar e Rodar Localmente
 Siga os passos abaixo para ter uma cópia do projeto rodando em sua máquina.
