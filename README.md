@@ -19,10 +19,10 @@ Pré-requisitos
 
 Passos
 - Clone o repositório:
-git clone https://github.com/matheus-pestana/WeatherSENAI.git
+git clone https://github.com/matheus-pestana/WeatherSENAI.git (nome-do-repositorio)
 
 - Navegue até a pasta do projeto:
-cd seu-repositorio
+cd (nome-do-repositorio)
 
 - Instale as dependências:
 npm install
