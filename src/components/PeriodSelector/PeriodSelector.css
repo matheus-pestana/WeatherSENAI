@@ -1,0 +1,41 @@
+/* src/components/PeriodSelector/PeriodSelector.css */
+.period-selector-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #444760;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 20px 0;
+  width: 100%;
+  max-width: 900px;
+}
+
+.period-selector-button {
+  flex-grow: 1;
+  padding: 15px 10px;
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  white-space: nowrap;
+}
+
+.period-selector-button:hover {
+  background-color: #555870;
+}
+
+.period-selector-button.selected {
+  background-color: #007bff; /* Cor azul de destaque */
+}
+
+/* Opcional: Adicionar media query para responsividade em telas menores */
+@media (max-width: 768px) {
+  .period-selector-container {
+    flex-wrap: nowrap; /* Evita quebra de linha em telas menores */
+    overflow-x: auto; /* Adiciona scroll horizontal se os botões não couberem */
+  }
+}

@@ -1,0 +1,81 @@
+/* src/components/SearchBar/SearchBar.css */
+
+/* O contêiner pai da barra de busca, lida com o posicionamento relativo */
+.search-bar-container {
+  position: relative;
+  width: 100%; /* Garante que ocupe a largura total do seu contêiner pai */
+  max-width: 900px; /* Limita a largura para telas maiores */
+  margin: 0 auto; /* Centraliza a barra de busca */
+}
+
+/* O contêiner da barra de busca e do botão, usa Flexbox para alinhamento */
+.search-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px; /* Espaço entre o input e o botão */
+  background-color: #3b3e55;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.search-bar input {
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background-color: #444760;
+  color: #fff;
+  flex-grow: 1; /* Permite que o input preencha o espaço disponível */
+  font-size: 1em;
+  /* Garante que o padding não cause vazamento do elemento */
+  box-sizing: border-box; 
+  min-width: 0; /* Evita que o input ignore flex-grow em telas menores */
+}
+
+.search-bar input::placeholder {
+  color: #a0a0a0;
+}
+
+.search-bar button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #555877;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  white-space: nowrap; /* Impede que o texto 'Buscar' quebre em várias linhas */
+}
+
+.search-bar button:hover {
+  background-color: #6a6f91;
+}
+
+/* Lista de sugestões, agora com posicionamento relativo ao search-bar-container */
+.suggestions-list {
+  position: absolute;
+  top: 100%; /* Posiciona a lista abaixo da barra de busca */
+  left: 0;
+  right: 0;
+  background-color: #444760;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  list-style-type: none;
+  padding: 5px 0;
+  margin: 5px 0 0 0;
+  z-index: 100;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.suggestions-list li {
+  padding: 10px 15px;
+  cursor: pointer;
+  color: #fff;
+}
+
+.suggestions-list li:hover {
+  background-color: #555877;
+}

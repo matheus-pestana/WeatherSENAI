@@ -1,0 +1,51 @@
+/* src/components/DataCards/DataCards.css */
+.data-cards-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch; /* Alinha os itens pela altura para que fiquem do mesmo tamanho */
+  gap: 20px;
+  width: 100%;
+  max-width: 900px;
+}
+
+.data-card {
+  flex: 1; /* Faz com que ambos os cards ocupem o mesmo espaço */
+  background-color: #444760;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  color: #fff;
+  /* Remova o min-height, pois o align-items: stretch já fará com que fiquem iguais */
+}
+
+.data-icon {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
+
+.data-value {
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+.chart-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.chart-title {
+  font-size: 1em;
+  margin: 0 0 10px 0;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .data-cards-container {
+    flex-direction: column;
+  }
+}

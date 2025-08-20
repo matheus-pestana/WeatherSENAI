@@ -1,0 +1,41 @@
+.today-weather-card {
+  background-color: #444760;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 250px;
+  flex: 1;
+}
+
+.city-name {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 0 0 10px 0;
+}
+
+.weather-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.weather-icon {
+  font-size: 4em;
+  margin-bottom: 5px;
+}
+
+.weather-description {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.temperature {
+  font-size: 3em;
+  font-weight: 300;
+  margin: 0;
+}

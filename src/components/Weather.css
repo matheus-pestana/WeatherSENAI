@@ -1,0 +1,42 @@
+.weather-container {
+  background-color: #f0f4f8;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  max-width: 400px;
+  margin: 40px auto;
+  text-align: center;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  color: #333;
+}
+
+.weather-container h2 {
+  font-size: 2em;
+  color: #007bff;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 10px;
+}
+
+.weather-container.loading,
+.weather-container.error,
+.weather-container.no-data {
+  font-size: 1.2em;
+  font-style: italic;
+  color: #555;
+}
+
+.weather-container.error {
+  color: #dc3545;
+}
+
+.weather-container p {
+  font-size: 1.1em;
+  margin: 10px 0;
+  line-height: 1.5;
+}
+
+.weather-container p strong {
+  color: #0056b3;
+  font-weight: bold;
+}
