@@ -2,11 +2,11 @@ import React from 'react';
 import './WeatherCard.css';
 import { getWeatherDescriptionAndIcon } from '../../utils/weatherUtils';
 
-const WeatherCard = ({ day, tempMax, tempMin, weatherCode }) => {
+const WeatherCard = ({ day, tempMax, tempMin, weatherCode, onClick }) => {
   const { icon } = getWeatherDescriptionAndIcon(weatherCode);
 
   return (
-    <div className="weather-card">
+    <div className="weather-card" onClick={onClick}>
       <p className="day">{day}</p>
       <span className="weather-icon">{icon}</span>
       <p className="temp-range">

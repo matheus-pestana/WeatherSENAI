@@ -14,12 +14,13 @@ const App = () => {
   const [error, setError] = useState(null);
   const [city, setCity] = useState("Sua Localização");
   const [selectedPeriod, setSelectedPeriod] = useState('today');
+  const [selectedDayIndex, setSelectedDayIndex] = useState(0);
 
   const fetchWeather = async (latitude, longitude, cityName) => {
     setError(null);
     try {
       // Solicita as variáveis horárias e diárias explicitamente
-      const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weathercode,relativehumidity_2m,windspeed_10m,apparent_temperature&hourly=temperature_2m,weathercode&daily=weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_probability_max,uv_index_max&timezone=auto`;
+      const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weathercode,relativehumidity_2m,windspeed_10m,apparent_temperature&hourly=temperature_2m,weathercode,apparent_temperature&daily=weathercode,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_probability_max,uv_index_max&timezone=auto`;
       const weatherResponse = await fetch(weatherUrl);
 
       if (!weatherResponse.ok) {
@@ -29,7 +30,7 @@ const App = () => {
       const weatherData = await weatherResponse.json();
       setWeatherData(weatherData);
       setCity(cityName || 'Sua Localização');
-
+      setSelectedDayIndex(0); // Reseta o índice ao buscar nova cidade
     } catch (err) {
       setError(err.message);
     } finally {
@@ -42,18 +43,17 @@ const App = () => {
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const cityName = await fetchCityNameFromCoords(position.coords.latitude, position.coords.longitude);
-          // A chamada para fetchWeather já lida com o estado de loading
           fetchWeather(position.coords.latitude, position.coords.longitude, cityName);
         },
         (err) => {
           console.error("Erro ao obter a localização: ", err);
           setError("Não foi possível obter sua localização. Por favor, pesquise uma cidade.");
-          setLoading(false); // Desativa o loading em caso de erro
+          setLoading(false);
         }
       );
     } else {
       setError("Seu navegador não suporta a API de Geolocalização.");
-      setLoading(false); // Desativa o loading se a geolocalização não estiver disponível
+      setLoading(false);
     }
   }, []);
 
@@ -78,7 +78,6 @@ const App = () => {
 
   const fetchCityNameFromCoords = async (latitude, longitude) => {
     try {
-      // API de geocodificação reversa
       const reverseGeoUrl = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}`;
       const response = await fetch(reverseGeoUrl);
       const data = await response.json();
@@ -92,31 +91,70 @@ const App = () => {
     }
   };
 
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const cityName = await fetchCityNameFromCoords(position.coords.latitude, position.coords.longitude);
-          fetchWeather(position.coords.latitude, position.coords.longitude, cityName);
-        },
-        (err) => {
-          console.error("Erro ao obter a localização: ", err);
-          setError("Não foi possível obter sua localização. Por favor, pesquise uma cidade.");
-          setLoading(false);
-        }
-      );
-    } else {
-      setError("Seu navegador não suporta a API de Geolocalização.");
-      setLoading(false);
-    }
-  }, []);
-
   const handlePeriodChange = (period) => {
     setSelectedPeriod(period);
-    // Aqui você faria a chamada à API com base no período
-    // fetchWeatherData(period);
+    let newIndex = 0;
+    switch (period) {
+      case 'today':
+        newIndex = 0;
+        break;
+      case 'tomorrow':
+        newIndex = 1;
+        break;
+      case 'weekend':
+        newIndex = 2;
+        break;
+      case '15-days':
+        newIndex = 0;
+        break;
+      default:
+        newIndex = 0;
+    }
+    setSelectedDayIndex(newIndex);
   };
 
+  const handleDayCardClick = (index) => {
+    setSelectedDayIndex(index);
+    setSelectedPeriod('other');
+  };
+  
+  const getHourlyDataForSelectedDay = (dayIndex) => {
+    const hoursPerDay = 24;
+    const startIndex = dayIndex * hoursPerDay;
+    const endIndex = startIndex + hoursPerDay;
+    
+    // A API fornece 168 horas (7 dias * 24 horas), então o slice funciona
+    const hourlyData = weatherData.hourly.time.slice(startIndex, endIndex).map((time, index) => ({
+      time: new Date(time).getHours() + 'h',
+      temp: weatherData.hourly.temperature_2m[startIndex + index],
+    }));
+
+    return hourlyData.slice(0, 10); // Limita aos 10 primeiros itens para o gráfico
+  };
+
+  const getDailyDataForSelectedDay = (dayIndex) => {
+    // Para o dia atual, usamos os dados 'current' que são mais precisos
+    if (dayIndex === 0) {
+      return {
+        temperature_2m: weatherData.current.temperature_2m,
+        weathercode: weatherData.current.weathercode,
+      };
+    } else {
+      // Para os dias futuros, usamos a temperatura máxima diária
+      return {
+        temperature_2m: weatherData.daily.temperature_2m_max[dayIndex],
+        weathercode: weatherData.daily.weathercode[dayIndex],
+      };
+    }
+  };
+
+  const getFeelsLikeForSelectedDay = (dayIndex) => {
+    if (dayIndex === 0) {
+      return weatherData.current.apparent_temperature;
+    } else {
+      return weatherData.daily.temperature_2m_max[dayIndex];
+    }
+  };
 
   return (
     <div className="app-container">
@@ -134,14 +172,14 @@ const App = () => {
             <div className="search">
               <SearchBar onSearch={fetchCityBySearch} />
               <DataCards
-                feelsLike={weatherData.current.apparent_temperature}
-                hourlyData={weatherData.hourly.time.slice(0, 10).map((time, index) => ({
-                  time: new Date(time).getHours() + 'h',
-                  temp: weatherData.hourly.temperature_2m[index],
-                }))}
+                feelsLike={getFeelsLikeForSelectedDay(selectedDayIndex)}
+                hourlyData={getHourlyDataForSelectedDay(selectedDayIndex)}
               />
             </div>
-            <TodayWeather data={weatherData.current} city={city} />
+            <TodayWeather 
+              data={getDailyDataForSelectedDay(selectedDayIndex)} 
+              city={city} 
+            />
           </div>
           <div className="weekly-forecast-container">
             {weatherData.daily.time.slice(0, 5).map((day, index) => (
@@ -151,16 +189,18 @@ const App = () => {
                 tempMax={weatherData.daily.temperature_2m_max[index]}
                 tempMin={weatherData.daily.temperature_2m_min[index]}
                 weatherCode={weatherData.daily.weathercode[index]}
+                onClick={() => handleDayCardClick(index)}
+                isSelected={index === selectedDayIndex} // Passa a propriedade para indicar se o cartão está selecionado
               />
             ))}
           </div>
           <ExtraInfo
-            rainProb={weatherData.daily.precipitation_probability_max[0]}
-            sunrise={weatherData.daily.sunrise[0]}
-            sunset={weatherData.daily.sunset[0]}
-            tempMax={weatherData.daily.temperature_2m_max[0]}
-            tempMin={weatherData.daily.temperature_2m_min[0]}
-            uvIndex={weatherData.daily.uv_index_max[0]}
+            rainProb={weatherData.daily.precipitation_probability_max[selectedDayIndex]}
+            sunrise={weatherData.daily.sunrise[selectedDayIndex]}
+            sunset={weatherData.daily.sunset[selectedDayIndex]}
+            tempMax={weatherData.daily.temperature_2m_max[selectedDayIndex]}
+            tempMin={weatherData.daily.temperature_2m_min[selectedDayIndex]}
+            uvIndex={weatherData.daily.uv_index_max[selectedDayIndex]}
             humidity={weatherData.current.relativehumidity_2m}
           />
         </>
