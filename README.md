@@ -48,6 +48,6 @@ Além disso, o projeto possui um tratamento de erros robusto. Ele verifica se a 
 Contribuições são sempre bem-vindas! Sinta-se à vontade para abrir uma issue ou enviar um pull request com melhorias.
 
 ## 📧 Contato
-Matheus Arcangelo Pestana - https://www.linkedin.com/in/matheus-arcangelo/ - matheus0pestana@gmail.com
-Eduardo de Oliveira Couto - https://www.linkedin.com/in/eduardo-couto-a0a858279/ - d.couto1314@gmail.com
+Matheus Arcangelo Pestana - https://www.linkedin.com/in/matheus-arcangelo/ - matheus0pestana@gmail.com  
+Eduardo de Oliveira Couto - https://www.linkedin.com/in/eduardo-couto-a0a858279/ - d.couto1314@gmail.com  
 Pedro Gabriel Moreira dos Santos - https://www.linkedin.com/in/pedro-santos-74480726b/ - pedrogabrielxx268@gmail.com
