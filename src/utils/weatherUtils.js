@@ -1,53 +1,28 @@
-export const getWeatherDescriptionAndIcon = (code) => {
-  switch (code) {
-    case 0:
-      return { description: 'Céu limpo', icon: '☀️' };
-    case 1:
-    case 2:
-    case 3:
-      return { description: 'Parcialmente nublado', icon: '⛅' };
-    case 45:
-    case 48:
-      return { description: 'Neblina', icon: '🌫️' };
-    case 51:
-    case 53:
-    case 55:
-      return { description: 'Chuvisco', icon: '🌧️' };
-    case 56:
-    case 57:
-      return { description: 'Chuvisco Gelado', icon: '🌨️' };
-    case 61:
-    case 63:
-    case 65:
-      return { description: 'Chuva', icon: '🌧️' };
-    case 66:
-    case 67:
-      return { description: 'Chuva Congelante', icon: '🌨️' };
-    case 71:
-    case 73:
-    case 75:
-      return { description: 'Neve', icon: '❄️' };
-    case 77:
-      return { description: 'Grãos de Neve', icon: '🌨️' };
-    case 80:
-    case 81:
-    case 82:
-      return { description: 'Pancadas de Chuva', icon: '🌦️' };
-    case 85:
-    case 86:
-      return { description: 'Pancadas de Neve', icon: '🌨️' };
-    case 95:
-      return { description: 'Trovoada', icon: '🌩️' };
-    case 96:
-    case 99:
-      return { description: 'Trovoada com Granizo', icon: '⛈️' };
-    default:
-      return { description: 'Desconhecido', icon: '🤷' };
-  }
-};
+// Arquivo: src/utils/weatherUtils.js (VERSÃO CORRIGIDA) ✅
 
 export const getDayOfWeek = (dateString) => {
-  const date = new Date(dateString);
+  // A API retorna "YYYY-MM-DD". Vamos quebrar a string para evitar
+  // que o JavaScript a interprete como UTC.
+  const [year, month, day] = dateString.split('-').map(Number);
+  
+  // Criamos a data usando os números. O mês em JavaScript é 0-indexado (0=Janeiro, 11=Dezembro),
+  // por isso subtraímos 1 do mês. Isso cria a data no fuso horário local.
+  const date = new Date(year, month - 1, day);
+
   const options = { weekday: 'short' };
-  return date.toLocaleDateString('pt-BR', options).toUpperCase().replace('.', '');
+  // Usamos 'pt-BR' para garantir que os dias sejam em português.
+  let dayName = new Intl.DateTimeFormat('pt-BR', options).format(date);
+
+  // Remove o ponto final que alguns navegadores adicionam (ex: "sáb.")
+  return dayName.replace('.', '').toUpperCase();
+};
+
+
+export const getWeatherDescriptionAndIcon = (code) => {
+  // ... sua lógica para ícones e descrições continua aqui ...
+  // Exemplo:
+  if (code === 0) return { description: 'Céu limpo', icon: '☀️' };
+  if (code === 1 || code === 2 || code === 3) return { description: 'Parcialmente nublado', icon: '⛅️' };
+  // ... adicione todos os outros códigos aqui
+  return { description: 'Desconhecido', icon: '❓' };
 };

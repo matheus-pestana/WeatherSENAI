@@ -7,7 +7,6 @@ const PeriodSelector = ({ selectedPeriod, onPeriodChange }) => {
     { label: 'Hoje', value: 'today' },
     { label: 'Amanhã', value: 'tomorrow' },
     { label: 'Fim de semana', value: 'weekend' },
-    { label: '15 dias', value: '15days' },
   ];
 
   return (
